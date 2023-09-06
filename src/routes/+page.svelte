@@ -8,6 +8,17 @@
             behavior: "smooth",
         });
     }
+
+    let hue = 0;
+
+    function hueShift() {
+        console.log("debug");
+        if (hue >= 360) {
+            hue = 0;
+        }
+        hue += 30;
+        document.documentElement.style.setProperty("--bgHue", hue);
+    }
 </script>
 
 <main>
@@ -28,6 +39,25 @@
                 Voluptatibus tempore laborum, architecto unde consectetur sed,
                 quos molestiae repudiandae deleniti mollitia labore officiis
                 quia aspernatur illo optio beatae nihil!
+            </p>
+            <p class="content emphasized">This is an important line.</p>
+            <p class="content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
+                corrupti soluta obcaecati reprehenderit dolorum quisquam omnis
+                molestiae laboriosam sequi consectetur, neque ducimus
+                perferendis, excepturi eius repellendus perspiciatis numquam
+                tempora molestias, necessitatibus similique voluptate!
+                Consequuntur odio sapiente nemo iste natus est voluptatem quos
+                praesentium, eveniet aut modi eligendi aliquam doloremque
+                adipisci dolores esse! Placeat quas asperiores ipsa. Cumque
+                accusamus aliquid expedita saepe, ab, dolorum aut corrupti ipsum
+                tempore facere alias voluptatem ipsam fugiat rerum! Quidem
+                itaque officiis dignissimos, dolore animi aliquid architecto,
+                corporis possimus dolores eveniet esse vero ullam cumque
+                expedita eos odio eius porro repellendus praesentium, voluptas
+                quae inventore. Suscipit atque unde vel asperiores
+                necessitatibus inventore modi obcaecati, repellat quia.
+                Excepturi, maiores expedita dolore quos, totam sunt distinctio
             </p>
         </div>
 
@@ -89,6 +119,7 @@
                 unde! Debitis eligendi unde deleniti fuga voluptate nisi iste
                 minus id, deserunt modi animi!
             </p>
+
             <div class="bottomwave">
                 <svg
                     data-name="Layer 1"
@@ -245,6 +276,9 @@
                     <button class="subscribeButton">Subscribe</button>
                 </div>
                 <div class="tier" id="diamond">
+                    <!-- svelte-ignore missing-declaration -->
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <span class="subheader">Diamond</span>
                     <ul>
                         <li>8GB RAM</li>
@@ -252,7 +286,9 @@
                         <li>100GB HDD</li>
                         <li>$1000/month</li>
                     </ul>
-                    <button class="subscribeButton">Subscribe</button>
+                    <button class="subscribeButton" on:click={hueShift}
+                        >Subscribe</button
+                    >
                 </div>
             </div>
         </div>
@@ -279,10 +315,11 @@
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Inter&family=Libre+Baskerville&family=Playfair+Display:wght@600&display=swap");
     * {
+        transition: background-color 0.5s ease-in;
     }
 
     :root {
-        --bgHue: 0;
+        --bgHue: 180;
         --bgSaturation: 30%;
         --bgLightness: 50%;
         --mainColor: hsl(var(--bgHue), var(--bgSaturation), var(--bgLightness));
@@ -304,7 +341,7 @@
         margin: auto;
         text-align: center;
         display: flex;
-        height: 50svh;
+        height: 100svh;
         background-color: hsl(
             var(--bgHue),
             var(--bgSaturation),
@@ -318,7 +355,7 @@
         margin: auto;
         text-align: center;
         display: flex;
-        height: 50svh;
+        height: 75svh;
         background-color: hsl(
             calc(var(--bgHue) + 15),
             var(--bgSaturation),
@@ -331,7 +368,7 @@
         margin: auto;
         text-align: center;
         display: flex;
-        height: 50svh;
+        height: 75svh;
         background-color: hsl(
             calc(var(--bgHue) + 200),
             var(--bgSaturation),
@@ -344,7 +381,7 @@
         margin: auto;
         text-align: center;
         display: flex;
-        height: 50svh;
+        height: 75svh;
         background-color: hsl(
             calc(var(--bgHue) + 225),
             var(--bgSaturation),
@@ -353,6 +390,7 @@
     }
 
     .card {
+        z-index: 5;
         position: absolute;
         top: 50%;
         transform: translateY(-50%) !important;
@@ -361,8 +399,13 @@
         text-align: center;
         width: 50em;
         height: auto;
-        border-radius: 12px;
         padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(15.5px);
+        -webkit-backdrop-filter: blur(15.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
     }
 
     @keyframes hover {
@@ -385,29 +428,51 @@
 
     #primary {
         margin-left: 10rem;
-        background-color: hsla(
+        /* background-color: hsla(
             calc(var(--bgHue) + 90),
             var(--bgSaturation),
             var(--bgLightness),
             20%
-        );
-        border: 3px solid var(--secondaryColor);
+        ); */
+        border: 1px solid var(--secondaryColor);
     }
 
     #secondary {
         position: absolute;
         right: 0;
         margin-right: 10rem;
-        background-color: hsla(
+        /* background-color: hsla(
             calc(var(--bgHue) + 180),
             var(--bgSaturation),
             var(--bgLightness),
             20%
-        );
-        border: 3px solid var(--mainColor);
+        ); */
+        border: 1px solid var(--mainColor);
+    }
+
+    .topwave {
+        z-index: 2;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+    }
+
+    .topwave svg {
+        position: relative;
+        display: block;
+        width: calc(300% + 1.3px);
+        height: 196px;
+    }
+
+    .topwave .shape-fill {
+        fill: #ffffff22;
     }
 
     .bottomwave {
+        z-index: 2;
         position: absolute;
         bottom: 0;
         left: 0;
@@ -425,7 +490,7 @@
     }
 
     .bottomwave .shape-fill {
-        fill: #ffffff05;
+        fill: #ffffff22;
     }
 
     .header {
@@ -475,6 +540,11 @@
         margin: 1rem 0rem;
     }
 
+    .emphasized {
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
     .imagecontent {
         margin: 1rem 1rem;
         display: flex;
@@ -486,7 +556,7 @@
         height: 150px;
         width: 3rem;
         scale: 35%;
-        transition: transform 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
     }
 
     img {
@@ -494,30 +564,10 @@
     }
 
     img:hover {
-        filter: brightness(110%);
+        filter: brightness(120%);
         cursor: pointer;
-        transform: translateY(-90px);
-        transition: transform 0.5s ease-in-out;
-    }
-
-    .topwave {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        overflow: hidden;
-        line-height: 0;
-    }
-
-    .topwave svg {
-        position: relative;
-        display: block;
-        width: calc(300% + 1.3px);
-        height: 196px;
-    }
-
-    .topwave .shape-fill {
-        fill: #ffffff05;
+        animation: hover 0.5s ease-in-out infinite;
+        transition: all 0.5s ease-in-out;
     }
 
     #topbutton {
@@ -568,9 +618,9 @@
         color: white;
         text-align: center;
         flex: auto;
-        border-left: 1px solid #797979;
+        border-left: 1px solid #b9b9b9;
         border-top: none;
-        border-right: 1px solid #797979;
+        border-right: 1px solid #b9b9b9;
         border-bottom: none;
         align-items: center;
     }
